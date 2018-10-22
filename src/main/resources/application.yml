@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/pms?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+    show-sql: true
+  jmx:
+    default-domain: agentservice
+endpoints:
+  jmx:
+    domain: agentservice
+    unique-names: true
