@@ -1,9 +1,31 @@
 spring:
-  datasource:
+  cache: 
+      type: ehcache
+      ehcache: 
+        config: classpath:/ehcache.xml
+  datasource: 
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/pms?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,logback
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
   jpa:
     properties:
       hibernate:
@@ -12,7 +34,21 @@ spring:
     show-sql: true
   jmx:
     default-domain: agentservice
-endpoints:
+  mvc:
+    date-format: yyyy-MM-dd
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss 
+server:
+  servlet:
+    context-path: /GlassSecond
+endpoints: 
   jmx:
     domain: agentservice
     unique-names: true
+druid: 
+  loginUsername: druidadmin
+  loginPassword: druidadmin
+#mybatis: 
+#  mapper-locations: classpath:mapper/*.xml  
+#  type-aliases-package: com.example.demo.model
